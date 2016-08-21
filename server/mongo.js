@@ -1,3 +1,4 @@
 module.exports = {
-  dbUrl: 'mongodb://localhost/test'
+  dbUrl: 'mongodb://localhost/test',
+  secret: 'mommijilebiggestbebiisaballofbebiness'
 }
