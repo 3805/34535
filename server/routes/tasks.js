@@ -26,16 +26,13 @@ module.exports = function(app, service, connection) {
       completed: req.body.completed,
     })
 
-    task.save((err, res) => {
+    task.save((err) => {
       if (err) {
-        return res.json(Object.keys(err.errors).map((name) => ({
-          message: err.errors[name].message
-        })))
+        return res.json(err)
       }
+      res.json({ message: 'OK' })
     })
 
-    res.json({ message: 'OK' })
-    
   })
 
   return router
