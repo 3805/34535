@@ -6,5 +6,7 @@ var services = {
   bodyParser: require('body-parser'),
 }
 
-var shell = () => app(services)
-module.exports = shell
+// var shell = () => app(services)
+// module.exports = shell
+app(services)
+module.exports = app

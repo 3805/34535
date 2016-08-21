@@ -1,10 +1,12 @@
 var mongoose = require('mongoose')
 
 var Schema = mongoose.Schema
-var ObjectId = Schema.ObjectId
 
 var Task = new Schema({
-  userId: { type: Number, required: true },
+  userId: {
+    type: Number,
+    required: true,
+  },
   board_id: { type: Number, required: true },
 
   include: { type: Array, default: [] },
@@ -20,6 +22,14 @@ var Task = new Schema({
   createdAt: { type: Date, default: Date.now() },
 })
 
+var User = new Schema({
+  username: { type: String, required: true },
+  email: { type: String, required: true },
+  password: { type: String, required: true},
+  createdAt: { type: Date, default: Date.now() },
+})
+
 module.exports = {
   Task: Task,
+  User: User,
 }

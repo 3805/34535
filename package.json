@@ -12,12 +12,14 @@
   "dependencies": {
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
+    "jsonwebtoken": "^7.1.9",
     "mongoose": "^4.5.9"
   },
   "devDependencies": {
     "sinon": "^1.17.5",
     "supertest": "^2.0.0",
     "tap-spec": "^4.1.1",
-    "tape": "^4.6.0"
+    "tape": "^4.6.0",
+    "tape-watch": "^2.2.3"
   }
 }
