@@ -1,11 +1,9 @@
-module.exports = function(app, service) {
+module.exports = function(app, service, connection) {
 
   var router = service.express.Router()
   var schema = require('../models')
 
   router.get('/', (req, res) => {
-    var mongoDB = require('../mongo').dbUrl;
-    var connection = service.mongoose.createConnection(mongoDB);
     var Task = connection.model('Task', schema.Task);
     return Task.find({}, (err, data) => res.json(data))
   })
