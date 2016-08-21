@@ -1,28 +1,12 @@
-process.env.NODE_ENV = 'test'
-
-var supertest = require('supertest')
-var sinon = require('sinon')
-var test = require('tape')
-var tapeSpec = require('tap-spec')
-
+var libs = require('./config.libs')
 var app = require('../shell')
+var localServer = require('./config.url')
 
-test.createStream()
-  .pipe(tapeSpec())
-  .pipe(process.stdout)
+require('./config')(libs)
+app(require('./config.spies')(libs))
 
-var createServicesSpies = () => ({
-  mongoose: sinon.stub(),
-  express: sinon.stub(),
-  bodyParser: sinon.spy(),
-})
-
-app(createServicesSpies())
-
-var localServer = 'http://localhost:8080'
-
-test('/GET tasks', (t) => {
-  supertest(localServer)
+libs.test('/GET tasks', (t) => {
+  libs.supertest(localServer)
     .get('/tasks')
     .expect(200)
     .end((err, res) => {
@@ -31,14 +15,14 @@ test('/GET tasks', (t) => {
     })
 })
 
-test('/POST tasks/new', (t) => {
-  supertest(localServer)
+libs.test('/POST tasks/new', (t) => {
+  libs.supertest(localServer)
     .post('/tasks/new')
     .send({})
     .end((err, res) => {
-      t.equal(Object.keys(res.body[0]).length, 1)
+      t.equal(typeof res, 'object')
       t.end()
     })
 })
 
-test.onFinish(() => process.exit(0))
+libs.test.onFinish(() => process.exit(0))

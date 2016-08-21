@@ -19,46 +19,58 @@ module.exports = function(app, service, connection) {
       password: req.body.password,
     })
 
-    user.save((err) => err ? res.json(err) : res.json(obj))
+    user.save((err) => {
+      if (err) {
+        return res.json(err)
+      }
+      return res.json(obj)
+    })
   })
 
   router.post('/authenticate', (req, res) => {
 
-    return User.findOne({ email: req.body.email }, (err, user) => {
+    if (req.body.email) {
+      return User.findOne({ email: req.body.email }, (err, user) => {
 
-      if (err) {
-        throw err
-      }
+        if (err) {
+          throw err
+        }
 
-      if (!user) {
-        return res.json({
-          success: false,
-          message: 'Authentication failed. User not found.'
-        })
-      }
-
-      if (user) {
-
-        if (user.password != req.body.password) {
+        if (!user) {
           return res.json({
             success: false,
-            message: 'Authentication failed. Password completely wrong!'
+            message: 'User not found.'
           })
         }
 
-        var token = jwt.sign(user, app.get('superSecret'), {
-          expiresInMinutes: 1440 // expires in 24 hours
-        })
+        if (user) {
 
-        return res.json({
-          success: true,
-          message: 'Bon appetito!',
-          // token: token,
-        })
-      }
+          if (user.password != req.body.password) {
+            return res.json({
+              success: false,
+              message: 'Password incorrect.'
+            })
+          }
 
+          var token = jwt.sign(user, app.get('superSecret'), {
+            expiresInMinutes: 1440 // expires in 24 hours
+          })
 
+          return res.json({
+            success: true,
+            message: 'Bon appetito!',
+            // token: token,
+          })
+
+        }
+      })
+    }
+
+    return res.json({
+      success: false,
+      message: 'User not found.'
     })
+
   })
   return router
 
