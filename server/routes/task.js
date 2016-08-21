@@ -7,7 +7,7 @@ module.exports = function(app, service) {
     var mongoDB = require('../mongo').dbUrl;
     var connection = service.mongoose.createConnection(mongoDB);
     var Task = connection.model('Task', schema.Task);
-    Task.find({}, (err, data) => res.json(data))
+    return Task.find({}, (err, data) => res.json(data))
   })
 
   router.post('/new', (req, res) => {
@@ -28,7 +28,13 @@ module.exports = function(app, service) {
       completed: req.body.completed,
     })
 
-    task.save((err) => err ? res.send(err) : res.send(obj))
+    return task.save((err) => {
+      if (err) {
+        return res.send(err)
+      }
+      return res.json(obj)
+    })
+
   })
 
   return router
