@@ -5,5 +5,5 @@ module.exports = function(service) {
     express: service.express,
     mongoose: service.mongoose
   })
-  app.listen(8080)
+  return app.listen(8080)
 }

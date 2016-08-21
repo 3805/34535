@@ -1,8 +1,10 @@
-var service = {
+var app = require('./server/app')
+
+var services = {
   mongoose: require('mongoose'),
   express: require('express'),
   bodyParser: require('body-parser'),
 }
 
-var app = require('./server/app')
-app(service)
+var shell = () => app(services)
+module.exports = shell
