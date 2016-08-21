@@ -16,7 +16,7 @@ var createServicesSpies = () => ({
   bodyParser: sinon.spy(),
 })
 
-test('/GET task', (t) => {
+test('/GET tasks', (t) => {
   supertest(app(createServicesSpies))
     .get('/tasks')
     .expect(200)
@@ -24,6 +24,10 @@ test('/GET task', (t) => {
       t.equal(typeof res, 'object')
       t.end()
     })
+})
+
+test('/POST tasks/new', (t) => {
+  
 })
 
 test.onFinish(() => process.exit(0))

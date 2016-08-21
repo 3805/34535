@@ -1,4 +1,4 @@
 module.exports = {
-  dbUrl: 'mongodb://localhost/test',
+  dbUrl: () => 'mongodb://localhost/' + (process.env.NODE_ENV || 'test'),
   secret: 'mommijilebiggestbebiisaballofbebiness'
 }

@@ -1,6 +1,6 @@
 
 module.exports = function(app, service) {
-  var mongoDB = require('../mongo').dbUrl;
+  var mongoDB = require('../mongo').dbUrl();
   var connection = service.mongoose.createConnection(mongoDB);
 
   app.get('/', (req, res) => res.send('OK ROUTES'))
