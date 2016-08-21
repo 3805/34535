@@ -3,7 +3,10 @@ var mongoose = require('mongoose')
 var Schema = mongoose.Schema
 
 var Task = new Schema({
-  userId: { type: Number, required: true },
+  userId: {
+    type: Number,
+    required: true,
+  },
   board_id: { type: Number, required: true },
 
   include: { type: Array, default: [] },
