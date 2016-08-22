@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "node test/cli.js",
+    "tw": "nodemon test/cli.js",
     "w": "nodemon cli.js"
   },
   "author": "",

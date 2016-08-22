@@ -3,5 +3,7 @@ module.exports = {
   tests: [
     'task',
     'user',
+    'authenticate',
+    'admin',
   ]
 }

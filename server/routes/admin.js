@@ -30,7 +30,10 @@ module.exports = function(deps) {
   })
 
 
-  adminRoutes.get('/teehee', (req, res) => res.send('you passed'))
+  adminRoutes.get('/teehee', (req, res) => res.json({
+    success: true,
+    message: 'you win',
+  }))
 
   return adminRoutes
 }
