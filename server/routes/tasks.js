@@ -13,7 +13,7 @@ module.exports = function(app, service, connection) {
 
     var task = new taskSchema({
       userId: req.body.userId,
-      board_id: req.body.boardId,
+      boardId: req.body.boardId,
 
       include: req.body.include,
 

@@ -7,7 +7,7 @@ var Task = new Schema({
     type: Number,
     required: true,
   },
-  board_id: { type: Number, required: true },
+  boardId: { type: Number, required: true },
 
   include: { type: Array, default: [] },
 
