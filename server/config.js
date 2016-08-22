@@ -1,6 +1,8 @@
 module.exports = function(app, service) {
   app.use(service.bodyParser.json())
 
+  app.set('superSecret', require('./mongo').secret)
+
   app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*")
     res.header(

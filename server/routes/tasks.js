@@ -1,15 +1,15 @@
 module.exports = function(app, service, connection) {
 
   var router = service.express.Router()
-  var schema = require('../models')
+  var schemaTask = require('../models').Task
 
   router.get('/', (req, res) => {
-    var Task = connection.model('Task', schema.Task);
+    var Task = connection.model('Task', schemaTask);
     return Task.find({}, (err, data) => res.json(data))
   })
 
   router.post('/new', (req, res) => {
-    var taskSchema = service.mongoose.model('Task', schema.Task)
+    var taskSchema = service.mongoose.model('Task', schemaTask)
 
     var task = new taskSchema({
       userId: req.body.userId,
