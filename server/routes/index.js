@@ -14,5 +14,6 @@ module.exports = function(app, service) {
   app.use('/tasks', require('./tasks')(deps))
   app.use('/users', require('./users')(deps))
   app.use('/admin', require('./admin')(deps))
+  app.use('/authenticate', require('./authenticate')(deps))
 
 }

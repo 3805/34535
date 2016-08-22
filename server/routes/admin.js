@@ -29,5 +29,8 @@ module.exports = function(deps) {
     })
   })
 
+
+  adminRoutes.get('/teehee', (req, res) => res.send('you passed'))
+
   return adminRoutes
 }

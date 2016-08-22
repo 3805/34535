@@ -22,7 +22,7 @@ module.exports = (localServer) =>
 
     libs.test('/POST authenticate user (empty)', (t) => {
       libs.supertest(localServer)
-      .post('/users/authenticate')
+      .post('/authenticate')
       .send({})
       .end((err, res) => {
         t.notOk(res.body.success)
@@ -33,7 +33,7 @@ module.exports = (localServer) =>
 
     libs.test('/POST authenticate user (wrong JSON keys)', (t) => {
       libs.supertest(localServer)
-      .post('/users/authenticate')
+      .post('/authenticate')
       .send({
         aasd: 'asdasd'
       })
@@ -46,7 +46,7 @@ module.exports = (localServer) =>
 
     libs.test('/POST authenticate user (wrong username)', (t) => {
       libs.supertest(localServer)
-      .post('/users/authenticate')
+      .post('/authenticate')
       .send({
         email: 'asdasd',
         password: '12312',
@@ -60,7 +60,7 @@ module.exports = (localServer) =>
 
     libs.test('/POST authenticate user (wrong password)', (t) => {
       libs.supertest(localServer)
-      .post('/users/authenticate')
+      .post('/authenticate')
       .send({
         email: 'test@test.test',
         password: '12312',
