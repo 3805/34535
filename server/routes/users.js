@@ -1,18 +1,18 @@
-module.exports = function(app, service, connection) {
+module.exports = function(deps) {
 
   var jwt = require('jsonwebtoken')
 
-  var router = service.express.Router()
+  var router = deps.service.express.Router()
   var schema = require('../models')
 
-  var User = connection.model('User', schema.User);
+  var User = deps.connection.model('User', schema.User);
 
   router.get('/', (req, res) => {
     User.find({}, (err, users) => res.json(users))
   })
 
   router.post('/new', (req, res) => {
-    var userSchema = service.mongoose.model('User', schema.User)
+    var userSchema = deps.service.mongoose.model('User', schema.User)
 
     var user = new userSchema({
       email: req.body.email,
@@ -52,7 +52,7 @@ module.exports = function(app, service, connection) {
             })
           }
 
-          var token = jwt.sign(user, app.get('superSecret'), {})
+          var token = jwt.sign(user, deps.app.get('superSecret'), {})
 
           return res.json({
             success: true,

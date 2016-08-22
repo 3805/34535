@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/tape test/*",
-    "w": "nodemon server/server.js"
+    "test": "node test/cli.js",
+    "w": "nodemon cli.js"
   },
   "author": "",
   "license": "ISC",

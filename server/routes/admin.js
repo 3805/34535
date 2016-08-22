@@ -1,57 +1,33 @@
-module.exports = function(app, service, connection) {
+module.exports = function(deps) {
 
   var jwt = require('jsonwebtoken')
 
-  var router = service.express.Router()
-  var schema = require('../models')
+  var adminRoutes = deps.service.express.Router()
 
-  var User = connection.model('User', schema.User);
+  adminRoutes.use((req, res, next) => {
 
-  router.post('/authenticate', (req, res) => {
+    var token = req.body.token ||
+      req.query.token ||
+      req.headers['x-access-token']
 
-    if (req.body.email) {
-      return User.findOne({ email: req.body.email }, (err, user) => {
-
+    if (token) {
+      return jwt.verify(token, deps.app.get('superSecret'), (err, decoded) => {
         if (err) {
-          throw err
-        }
-
-        if (!user) {
-          return res.status(403).json({
-            success: false,
-            message: 'User not found.'
-          })
-        }
-
-        if (user) {
-
-          if (user.password != req.body.password) {
-            return res.status(403).json({
-              success: false,
-              message: 'Password incorrect.'
-            })
-          }
-
-          var token = jwt.sign(user, app.get('superSecret'), {})
-
           return res.json({
-            success: true,
-            message: 'Bon appetito!',
-            token: token,
+            success: false,
+            message: 'Failed to authenticate token.'
           })
-
         }
+        req.decoded = decoded
+        next()
       })
     }
 
-    return res.json({
+    return res.status(403).send({
       success: false,
-      message: 'User not found.'
+      message: 'No token provided.'
     })
-
   })
 
-
-  return router
-
+  return adminRoutes
 }
