@@ -7,6 +7,7 @@ module.exports = function(app, service) {
     app: app,
     service: service,
     connection: connection,
+    actions: require('./actions'),
   }
 
   app.get('/', (req, res) => res.send('OK ROUTES'))

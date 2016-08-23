@@ -8,7 +8,12 @@ module.exports = function(deps) {
   var User = deps.connection.model('User', schema.User);
 
   router.get('/', (req, res) => {
-    User.find({}, (err, users) => res.json(users))
+    User.find({}, (err, users) => {
+      if (err) {
+        return res.json(deps.actions.fail(err))
+      }
+      res.json(deps.actions.success(users))
+    })
   })
 
   router.post('/new', (req, res) => {
@@ -21,12 +26,11 @@ module.exports = function(deps) {
 
     user.save((err) => {
       if (err) {
-        return res.json(err)
+        return res.json(deps.actions.fail(err))
       }
-      return res.json(obj)
+      res.json(deps.actions.success({ data: 'OK' }))
     })
   })
-
 
   return router
 
