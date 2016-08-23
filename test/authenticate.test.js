@@ -7,7 +7,7 @@ module.exports = (localServer) =>
         .send({})
         .end((err, res) => {
           t.notOk(res.body.success)
-          t.equal(res.body.message, 'User not found.')
+          t.equal(res.body.data, 'User not found.')
           t.end()
         })
     })
@@ -20,7 +20,7 @@ module.exports = (localServer) =>
         })
         .end((err, res) => {
           t.notOk(res.body.success)
-          t.equal(res.body.message, 'User not found.')
+          t.equal(res.body.data, 'User not found.')
           t.end()
         })
     })
@@ -34,7 +34,7 @@ module.exports = (localServer) =>
         })
         .end((err, res) => {
           t.notOk(res.body.success)
-          t.equal(res.body.message, 'User not found.')
+          t.equal(res.body.data, 'User not found.')
           t.end()
         })
     })
@@ -48,7 +48,7 @@ module.exports = (localServer) =>
         })
         .end((err, res) => {
           t.notOk(res.body.success)
-          t.equal(res.body.message, 'Password incorrect.')
+          t.equal(res.body.data, 'Password incorrect.')
           t.end()
         })
     })
@@ -63,7 +63,7 @@ module.exports = (localServer) =>
         .end((err, res) => {
           t.ok(res.body.success)
           if (res.body.success === true) {
-            require('./config.token').set(res.body.token)
+            require('./config.token').set(res.body.data.token)
           }
           t.end()
         })

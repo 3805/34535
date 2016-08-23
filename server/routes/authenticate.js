@@ -16,40 +16,27 @@ module.exports = function(deps) {
         }
 
         if (!user) {
-          return res.status(403).json({
-            success: false,
-            message: 'User not found.'
-          })
-          // return res.status(403).json(deps.actions.fail({
-          //   message: ''
-          // }))
+          return res.status(403).json(deps.actions.fail('User not found.'))
         }
 
         if (user) {
 
           if (user.password != req.body.password) {
-            return res.status(403).json({
-              success: false,
-              message: 'Password incorrect.'
-            })
+            return res.status(403).json(deps.actions.fail('Password incorrect.'))
           }
 
           var token = jwt.sign(user, deps.app.get('superSecret'), {})
 
-          return res.json({
-            success: true,
+          return res.json(deps.actions.success({
             message: 'Bon appetito!',
             token: token,
-          })
+          }))
 
         }
       })
     }
 
-    return res.json({
-      success: false,
-      message: 'User not found.'
-    })
+    return res.json(deps.actions.fail('User not found.'))
 
   })
 

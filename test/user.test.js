@@ -14,7 +14,7 @@ module.exports = (localServer) =>
       .post('/users/new')
       .send({})
       .end((err, res) => {
-        t.ok(res.body.message === 'User validation failed')
+        t.ok(res.body.data.message === 'User validation failed')
         t.end()
       })
     })
