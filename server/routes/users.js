@@ -28,10 +28,9 @@ module.exports = function(deps) {
       if (err) {
         return res.json(deps.actions.fail(err))
       }
-      res.json(deps.actions.success({ message: 'OK' }))
+      res.json(deps.actions.success({ data: 'OK' }))
     })
   })
-
 
   return router
 
