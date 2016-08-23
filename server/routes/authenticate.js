@@ -20,6 +20,9 @@ module.exports = function(deps) {
             success: false,
             message: 'User not found.'
           })
+          // return res.status(403).json(deps.actions.fail({
+          //   message: ''
+          // }))
         }
 
         if (user) {

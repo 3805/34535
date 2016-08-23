@@ -13,27 +13,23 @@ module.exports = function(deps) {
     if (token) {
       return jwt.verify(token, deps.app.get('superSecret'), (err, decoded) => {
         if (err) {
-          return res.json({
-            success: false,
+          return res.status(403).json(deps.actions.fail({
             message: 'Failed to authenticate token.'
-          })
+          }))
         }
         req.decoded = decoded
         next()
       })
     }
 
-    return res.status(403).send({
-      success: false,
+    return res.status(403).json(deps.actions.fail({
       message: 'No token provided.'
-    })
+    }))
   })
 
-
-  adminRoutes.get('/teehee', (req, res) => res.json({
-    success: true,
-    message: 'you win',
-  }))
+  adminRoutes.get('/teehee', (req, res) => res.json(deps.actions.success({
+    message: 'You win.'
+  })))
 
   return adminRoutes
 }

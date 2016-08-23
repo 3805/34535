@@ -5,7 +5,12 @@ module.exports = function(deps) {
 
   router.get('/', (req, res) => {
     var Task = deps.connection.model('Task', schemaTask);
-    return Task.find({}, (err, data) => res.json(data))
+    return Task.find({}, (err, data) => {
+      if (err) {
+        return res.json(deps.actions.fail(err))
+      }
+      res.json(deps.actions.success(data))
+    })
   })
 
   router.post('/new', (req, res) => {
@@ -26,11 +31,11 @@ module.exports = function(deps) {
       completed: req.body.completed,
     })
 
-    task.save((err) => {
+    return task.save((err) => {
       if (err) {
-        return res.json(err)
+        return res.json(deps.actions.fail(err))
       }
-      res.json({ message: 'OK' })
+      res.json(deps.actions.success({ message: 'OK' }))
     })
 
   })
