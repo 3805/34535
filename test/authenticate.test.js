@@ -63,7 +63,7 @@ module.exports = (localServer) =>
         .end((err, res) => {
           t.ok(res.body.success)
           if (res.body.success === true) {
-            require('./config.token').set(res.body.data.token)
+            require('./config.service').token.set(res.body.data.token)
           }
           t.end()
         })

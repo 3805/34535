@@ -19,15 +19,13 @@ module.exports = function(deps) {
     var Task = deps.service.mongoose.model('Task', schemaTask)
 
     var task = new Task({
-      userId     : req.body.userId,
-      boardId    : req.body.boardId,
-      include    : req.body.include,
-      title      : req.body.title,
-      description: req.body.description,
-      progress   : req.body.progress,
-      urgent     : req.body.urgent,
-      important  : req.body.important,
-      completed  : req.body.completed,
+      userId   : req.body.userId,
+      boardId  : req.body.boardId,
+      include  : req.body.include,
+      title    : req.body.title,
+      notes    : req.body.notes,
+      progress : req.body.progress,
+      priority : req.body.priority
     })
 
     return task.save((err) => {
