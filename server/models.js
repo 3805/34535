@@ -3,21 +3,14 @@ var mongoose = require('mongoose')
 var Schema = mongoose.Schema
 
 var Task = new Schema({
-  userId: {
-    type: Number,
-    required: true,
-  },
+  userId: { type: Number, required: true },
   boardId: { type: Number, required: true },
 
-  include: { type: Array, default: [] },
-
   title: { type: String, required: true },
-  description: { type: String },
+  notes: { type: Array },
   progress: { type: Number, default: 0},
-
-  urgent: { type: Boolean, default: false },
-  important: { type: Boolean, default: false },
-  completed: { type: Boolean, default: false },
+  priotity: { type: Number, default: 0 },
+  include: { type: Array, default: [] },
 
   createdAt: { type: Date, default: Date.now() },
 })
