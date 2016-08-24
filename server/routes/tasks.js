@@ -4,7 +4,6 @@ module.exports = function(deps) {
   var schemaTask = require('../models').Task
 
   var router = deps.service.express.Router()
-
   var Task = deps.service.mongoose.model('Task', schemaTask)
 
   router.post('/new', (req, res) => {
@@ -19,11 +18,11 @@ module.exports = function(deps) {
       priority : req.body.priority
     })
 
-    return task.save((err) => {
+    return task.save((err, data) => {
       if (err) {
         return res.json(deps.actions.fail(err))
       }
-      res.json(deps.actions.success({ data: 'Saved.' }))
+      res.json(deps.actions.success(data))
     })
 
   })

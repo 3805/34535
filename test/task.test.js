@@ -15,11 +15,26 @@ module.exports = (localServer) =>
         })
     })
 
-    libs.test('/POST tasks/new', (t) => {
+    libs.test('/POST tasks/new (empty)', (t) => {
       libs.supertest(localServer)
         .post('/tasks/new').send({})
         .end((err, res) => {
           t.equal(typeof res, 'object')
+          t.notOk(res.body.success)
+          t.end()
+        })
+    })
+
+    libs.test('/POST tasks/new (success)', (t) => {
+      libs.supertest(localServer)
+        .post('/tasks/new').send({
+          userId: 11,
+          boardId: 11,
+          title: 'BOBOPE IS HAPPY',
+        })
+        .end((err, res) => {
+          t.equal(typeof res.body.data._id, 'string')
+          t.ok(res.body.success)
           t.end()
         })
     })
