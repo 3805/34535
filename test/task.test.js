@@ -10,7 +10,7 @@ module.exports = (localServer) =>
         .expect(200)
         .end((err, res) => {
           t.equal(typeof res, 'object')
-          service.task.set = res.body.data[0]._id
+          service.task.set(res.body.data[0]._id)
           t.end()
         })
     })
@@ -24,10 +24,48 @@ module.exports = (localServer) =>
         })
     })
 
-    libs.test('/PUT tasks/:id', (t) => {
+    libs.test('/PATCH tasks/:id (Wrong id)', (t) => {
       libs.supertest(localServer)
-        .put('/tasks').send({
+        .patch('/tasks/12445').send({
           title: 'TEST - new title'
+        })
+        .end((err, res) => {
+          t.notOk(res.body.success)
+          t.end()
+        })
+    })
+
+    libs.test('/PATCH tasks/:id (no id)', (t) => {
+      libs.supertest(localServer)
+        .patch('/tasks/').send({
+          title: 'TEST - new title',
+          userId: 1,
+          boardId: 1,
+        })
+        .end((err, res) => {
+          t.notOk(res.body.success)
+          t.end()
+        })
+    })
+
+    libs.test('/PATCH tasks/:id (no required field)', (t) => {
+      libs.supertest(localServer)
+        .patch('/tasks/').send({
+          title: 'TEST - new title',
+          boardId: 1,
+        })
+        .end((err, res) => {
+          t.notOk(res.body.success)
+          t.end()
+        })
+    })
+
+    libs.test('/PUT tasks/:id (success)', (t) => {
+      libs.supertest(localServer)
+        .patch('/tasks/' + service.task.get()).send({
+          title: 'TEST - new title',
+          userId: 1,
+          boardId: 1,
         })
         .end((err, res) => {
           t.ok(res.body.success)

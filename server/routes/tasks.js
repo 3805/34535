@@ -5,18 +5,9 @@ module.exports = function(deps) {
 
   var router = deps.service.express.Router()
 
-  router.get('/', (req, res) => {
-    var Task = deps.connection.model('Task', schemaTask);
-    Task.find({}, (err, data) => {
-      if (err) {
-        return res.json(deps.actions.fail(err))
-      }
-      res.json(deps.actions.success(data))
-    })
-  })
+  var Task = deps.service.mongoose.model('Task', schemaTask)
 
   router.post('/new', (req, res) => {
-    var Task = deps.service.mongoose.model('Task', schemaTask)
 
     var task = new Task({
       userId   : req.body.userId,
@@ -32,19 +23,58 @@ module.exports = function(deps) {
       if (err) {
         return res.json(deps.actions.fail(err))
       }
-      res.json(deps.actions.success({ data: 'OK' }))
+      res.json(deps.actions.success({ data: 'Saved.' }))
+    })
+
+  })
+
+  router.get('/', (req, res) => {
+    Task.find({}, (err, data) => {
+      if (err) {
+        return res.json(deps.actions.fail(err))
+      }
+      res.json(deps.actions.success(data))
+    })
+  })
+
+  router.patch('/:id', (req, res) => {
+    if (!req.params.id) {
+      return res.json(deps.actions.fail({
+        data: 'No ID assigned.'
+      }))
+    }
+
+    Task.findOne({ _id: req.params.id }, (err, data) => {
+      if (err) {
+        return res.json(deps.actions.fail(err))
+      }
+
+      data.boardId  = req.body.boardId
+      data.userId   = req.body.userId
+      data.include  = req.body.include || undefined
+      data.title    = req.body.title
+      data.notes    = req.body.notes || undefined
+      data.progress = req.body.progress
+      data.priority = req.body.priority
+
+      data.save((err) => {
+        if (err) {
+          return res.json(deps.actions.fail(err))
+        }
+        res.json(deps.actions.success(data))
+      })
     })
 
   })
 
   router.delete('/:id', (req, res) => {
-    var Task = deps.service.mongoose.model('Task', schemaTask)
-
     Task.remove({ _id: req.params.id }, (err, data) => {
       if (err) {
         return res.json(deps.actions.fail(err))
       }
-      return res.json(deps.actions.success({ message: 'Task successfully deleted.' }))
+      return res.json(deps.actions.success({
+        data: 'Task successfully deleted.'
+      }))
     })
   })
 

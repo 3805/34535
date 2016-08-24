@@ -7,7 +7,7 @@ module.exports = {
 
   task: {
     id: undefined,
-    set: function(id) { this.taskId = id },
-    get: function() { return this.taskId },
+    set: function(taskId) { this.id = taskId },
+    get: function() { return this.id },
   }
 }
