@@ -24,11 +24,12 @@ module.exports = function(deps) {
       password: req.body.password,
     })
 
-    User.save((err) => {
+    User.save((err, user) => {
       if (err) {
         return res.json(deps.actions.fail(err))
       }
-      res.json(deps.actions.success({ data: 'OK' }))
+      // res.json(deps.actions.success({ data: 'OK' }))
+      res.json(deps.actions.success(user))
     })
   })
 
